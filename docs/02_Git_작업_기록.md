@@ -73,7 +73,7 @@ git checkout -b feature/quiz-play
 ### 3.2 브랜치에서 기능 개발 및 커밋
 
 ```bash
-git add src/ tests/
+git add src/
 git commit -m "Feat: 퀴즈 풀기 기능 구현"
 ```
 

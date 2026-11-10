@@ -19,6 +19,5 @@ htmlcov/
 # 운영체제
 .DS_Store
 Thumbs.db
-
-# 데이터
-*.json
+# 미션 원문 (로컬 참고용)
+mission_context.md
