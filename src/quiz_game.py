@@ -350,7 +350,18 @@ class QuizGame:
             print("삭제한 내용은 프로그램을 종료하면 되돌아갑니다.")
 
     def show_score(self):
-        print("준비 중입니다.")
+        """10/20/30문제 모드별 최고 점수와 이니셜을 보여준다."""
+        print("\n🏆 모드별 최고 점수")
+        print("-" * 40)
+        # 모드가 3개로 정해져 있으므로 for로 차례대로 출력한다
+        for mode in MODES:
+            best = self.records[mode]["best_score"]
+            # best_score가 None(null)이면 아직 이 모드를 플레이하지 않은 것
+            if best is None:
+                print(f"{mode}문제: 기록 없음")
+            else:
+                print(f"{mode}문제: {best['score']}점 ({best['name']})")
+        print("-" * 40)
 
     def show_history(self):
         print("준비 중입니다.")
