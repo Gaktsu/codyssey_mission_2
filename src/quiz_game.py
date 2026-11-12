@@ -6,8 +6,8 @@ from datetime import datetime
 from pathlib import Path
 
 from src.default_quizzes import create_default_quizzes
-from src.input_utils import read_initials, read_int
-from src.quiz import Quiz
+from src.input_utils import read_initials, read_int, read_text
+from src.quiz import CHOICE_COUNT, Quiz
 
 # 실행 위치(현재 디렉터리)와 상관없이 항상 같은 파일을 찾도록
 # 이 파일(src/quiz_game.py) 위치를 기준으로 프로젝트 루트의 data 폴더 경로를 계산한다.
@@ -291,7 +291,21 @@ class QuizGame:
         return is_new_best
 
     def add_quiz(self):
-        print("준비 중입니다.")
+        """문제, 선택지 4개, 정답 번호, 힌트를 입력받아 퀴즈를 추가하고 저장한다."""
+        print("\n📌 새로운 퀴즈를 추가합니다.")
+        question = read_text("문제를 입력하세요: ")
+        # 선택지 개수만큼 같은 입력을 반복하므로 리스트 컴프리헨션으로 한 번에 모은다
+        choices = [read_text(f"선택지 {number}: ") for number in range(1, CHOICE_COUNT + 1)]
+        answer = read_int(f"정답 번호 (1~{CHOICE_COUNT}): ", 1, CHOICE_COUNT)
+        hint = read_text("힌트를 입력하세요: ")
+
+        # 입력 단계에서 이미 검증했으므로 Quiz()의 검사도 통과한다
+        self.quizzes.append(Quiz(question, choices, answer, hint))
+        # 저장에 성공했을 때만 완료 안내 (실패하면 save_quizzes()가 실패 안내를 출력)
+        if self.save_quizzes():
+            print(f"✅ 퀴즈가 추가되었습니다! (총 {len(self.quizzes)}개)")
+        else:
+            print("추가한 퀴즈는 프로그램을 종료하면 사라집니다.")
 
     def list_quizzes(self):
         print("준비 중입니다.")

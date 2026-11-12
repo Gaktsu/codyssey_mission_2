@@ -47,3 +47,13 @@ def read_initials():
             # kms, KMS, Kms를 같은 사람으로 보도록 대문자로 통일한다
             return text.upper()
         print("영문 1~3글자로 입력하세요. (예: KMS)")
+
+
+def read_text(prompt):
+    """비어 있지 않은 문자열을 입력할 때까지 묻고, 앞뒤 공백을 제거해 돌려준다."""
+    while True:
+        text = input(prompt).strip()
+        # 빈 질문·선택지·힌트로는 퀴즈를 만들 수 없으므로 다시 입력받는다
+        if text:
+            return text
+        print("내용이 비어 있습니다. 다시 입력하세요.")
