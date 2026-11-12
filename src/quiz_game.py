@@ -308,7 +308,18 @@ class QuizGame:
             print("추가한 퀴즈는 프로그램을 종료하면 사라집니다.")
 
     def list_quizzes(self):
-        print("준비 중입니다.")
+        """등록된 퀴즈의 번호, 질문, 선택지를 출력한다. 정답은 보여주지 않는다."""
+        if not self.quizzes:
+            print("\n등록된 퀴즈가 없습니다.")
+            return
+        print(f"\n📋 등록된 퀴즈 목록 (총 {len(self.quizzes)}개)")
+        print("-" * 40)
+        # 별도 ID 없이 리스트 순서대로 1부터 번호를 붙인다. 삭제할 때도 이 번호를 사용한다
+        for number, quiz in enumerate(self.quizzes, start=1):
+            print(f"[{number}] {quiz.question}")
+            # 플레이 전에 정답이 노출되지 않도록 선택지만 보여준다 (정답 표시 없음)
+            print("    " + " / ".join(quiz.choices))
+        print("-" * 40)
 
     def delete_quiz(self):
         print("준비 중입니다.")
