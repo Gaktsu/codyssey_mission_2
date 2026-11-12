@@ -364,4 +364,17 @@ class QuizGame:
         print("-" * 40)
 
     def show_history(self):
-        print("준비 중입니다.")
+        """모드별 최근 플레이 기록(최대 10개)을 최신순으로 보여준다."""
+        print("\n📜 점수 기록 (모드별 최근 10개)")
+        for mode in MODES:
+            scores = self.records[mode]["scores"]
+            print("-" * 40)
+            print(f"[{mode}문제]")
+            if not scores:
+                print("  기록 없음")
+                continue
+            # 기록은 오래된 것부터 쌓이므로 reversed()로 뒤집어 최신 기록부터 보여준다
+            for entry in reversed(scores):
+                print(f"  {entry['date']}  {entry['name']:<3}  "
+                      f"{entry['total_questions']}문제  {entry['score']}점")
+        print("-" * 40)
