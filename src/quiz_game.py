@@ -6,7 +6,7 @@ from datetime import datetime
 from pathlib import Path
 
 from src.default_quizzes import create_default_quizzes
-from src.input_utils import read_initials, read_int, read_text
+from src.input_utils import read_initials, read_int, read_text, read_yes_no
 from src.quiz import CHOICE_COUNT, Quiz
 
 # 실행 위치(현재 디렉터리)와 상관없이 항상 같은 파일을 찾도록
@@ -322,7 +322,32 @@ class QuizGame:
         print("-" * 40)
 
     def delete_quiz(self):
-        print("준비 중입니다.")
+        """목록 번호로 퀴즈를 골라 확인 후 삭제하고 저장한다."""
+        if not self.quizzes:
+            print("\n삭제할 퀴즈가 없습니다.")
+            return
+        # 삭제할 번호를 고를 수 있도록 목록을 먼저 보여준다
+        self.list_quizzes()
+        number = read_int(f"삭제할 퀴즈 번호 (1~{len(self.quizzes)}, 취소: 0): ", 0, len(self.quizzes))
+        if number == 0:
+            print("삭제를 취소했습니다.")
+            return
+
+        # 목록 번호는 1부터, 리스트 인덱스는 0부터라 1을 뺀다
+        quiz = self.quizzes[number - 1]
+        print(f"\n[{number}] {quiz.question}")
+        # 실수로 지우는 것을 막기 위해 한 번 더 확인한다
+        if not read_yes_no("이 퀴즈를 삭제할까요? (y/n): "):
+            print("삭제를 취소했습니다.")
+            return
+
+        # pop(인덱스): 해당 위치의 항목을 리스트에서 꺼내 제거한다
+        self.quizzes.pop(number - 1)
+        # 저장에 성공했을 때만 완료 안내 (실패하면 save_quizzes()가 실패 안내를 출력)
+        if self.save_quizzes():
+            print(f"🗑️ 퀴즈가 삭제되었습니다. (남은 퀴즈 {len(self.quizzes)}개)")
+        else:
+            print("삭제한 내용은 프로그램을 종료하면 되돌아갑니다.")
 
     def show_score(self):
         print("준비 중입니다.")

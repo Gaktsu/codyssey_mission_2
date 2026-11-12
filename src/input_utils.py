@@ -57,3 +57,15 @@ def read_text(prompt):
         if text:
             return text
         print("내용이 비어 있습니다. 다시 입력하세요.")
+
+
+def read_yes_no(prompt):
+    """y 또는 n을 입력할 때까지 묻는다. y면 True, n이면 False."""
+    while True:
+        # Y/N 대문자도 받도록 소문자로 바꿔 비교한다
+        text = input(prompt).strip().lower()
+        if text == "y":
+            return True
+        if text == "n":
+            return False
+        print("y 또는 n으로 입력하세요.")
