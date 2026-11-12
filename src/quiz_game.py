@@ -98,6 +98,8 @@ class QuizGame:
         self.load_scores()
         print(f"\n📂 데이터를 불러왔습니다. (퀴즈 {len(self.quizzes)}개)")
 
+    # ---------- 데이터 불러오기 / 저장 ----------
+
     def load_quizzes(self):
         """state.json에서 퀴즈를 불러온다. 문제가 있으면 기본 퀴즈로 시작한다."""
         try:
@@ -164,7 +166,14 @@ class QuizGame:
             print(f"⚠️ {path.name} 저장에 실패했습니다. ({error.strerror})")
             return False
 
+    # ---------- 메뉴 ----------
+
+    def show_menu(self):
+        """메뉴 화면을 출력한다."""
+        print(MENU)
+
     def run(self):
+        """메뉴를 보여주고 고른 기능을 실행하는 것을 종료할 때까지 반복한다."""
         # 메뉴 번호(int)를 키로, 실행할 메서드를 값으로 둔 dict.
         # if/elif를 6번 나열하지 않고 actions[choice]()로 번호에 맞는 기능을 바로 실행한다.
         # self.play_game처럼 괄호 없이 쓰면 메서드를 "호출"하지 않고 메서드 자체를 값으로 담는다.
@@ -179,12 +188,14 @@ class QuizGame:
         # 사용자가 종료를 고를 때까지 몇 번 반복할지 모르므로 while True.
         # Ctrl+C / EOF는 여기서 잡지 않고 main.py로 전달되어 안내 후 종료된다.
         while True:
-            print(MENU)
+            self.show_menu()
             choice = read_int("메뉴 번호를 입력하세요: ", 1, EXIT_CHOICE)
             if choice == EXIT_CHOICE:
                 print("프로그램을 종료합니다.")
                 return
             actions[choice]()
+
+    # ---------- 퀴즈 풀기 ----------
 
     def play_game(self):
         """모드를 고르고 랜덤으로 출제한 뒤, 점수를 계산하고 기록한다."""
@@ -200,6 +211,17 @@ class QuizGame:
         questions = random.sample(self.quizzes, count)
         print(f"\n📝 퀴즈를 시작합니다! (총 {count}문제)")
 
+        # 출제 → 점수 계산 → 결과 표시 → 기록 저장을 각각의 메서드로 나눠 흐름만 남겼다
+        correct, hints_used, hint_correct = self.ask_questions(questions)
+        score = self.calculate_score(count, correct, hint_correct)
+        self.show_result(count, correct, hints_used, score)
+
+        name = read_initials()
+        if self.record_score(count, name, score):
+            print("🎉 새로운 최고 점수입니다!")
+
+    def ask_questions(self, questions):
+        """문제를 차례로 출제하고 (정답 수, 힌트 사용 수, 힌트 쓰고 맞힌 수)를 돌려준다."""
         correct = 0       # 맞힌 문제 수
         hints_used = 0    # 힌트를 사용한 문제 수
         hint_correct = 0  # 힌트를 쓰고 맞힌 문제 수 (감점 대상)
@@ -219,19 +241,20 @@ class QuizGame:
             else:
                 # quiz.answer는 1~4, 리스트 인덱스는 0부터라 1을 뺀다
                 print(f"❌ 오답입니다. 정답: {quiz.answer}. {quiz.choices[quiz.answer - 1]}")
+        return correct, hints_used, hint_correct
 
+    def calculate_score(self, count, correct, hint_correct):
+        """100점 만점 점수를 계산한다."""
         # 정답 1문제 = 100점, 힌트를 쓰고 맞히면 90점, 오답 0점 → 평균을 100점 만점으로.
         # 미션에 실수 요구가 없어 정수 나눗셈(//)으로 소수점 아래를 버린다. 예: 22.5 → 22
-        score = (correct * 100 - hint_correct * 10) // count
+        return (correct * 100 - hint_correct * 10) // count
 
+    def show_result(self, count, correct, hints_used, score):
+        """게임 결과를 출력한다."""
         print("=" * 40)
         print(f"🏆 결과: {count}문제 중 {correct}문제 정답! (힌트 {hints_used}회 사용)")
         print(f"점수: {score}점")
         print("=" * 40)
-
-        name = read_initials()
-        if self.record_score(count, name, score):
-            print("🎉 새로운 최고 점수입니다!")
 
     def select_mode(self):
         """10/20/30문제 모드를 고르게 한다. 문제 수를 돌려주고, 돌아가기면 None."""
@@ -289,6 +312,8 @@ class QuizGame:
         # 저장에 실패하면 save_scores()가 실패 안내를 출력한다
         self.save_scores()
         return is_new_best
+
+    # ---------- 퀴즈 관리 (추가 / 목록 / 삭제) ----------
 
     def add_quiz(self):
         """문제, 선택지 4개, 정답 번호, 힌트를 입력받아 퀴즈를 추가하고 저장한다."""
@@ -348,6 +373,8 @@ class QuizGame:
             print(f"🗑️ 퀴즈가 삭제되었습니다. (남은 퀴즈 {len(self.quizzes)}개)")
         else:
             print("삭제한 내용은 프로그램을 종료하면 되돌아갑니다.")
+
+    # ---------- 점수 (최고 점수 / 기록) ----------
 
     def show_score(self):
         """10/20/30문제 모드별 최고 점수와 이니셜을 보여준다."""
