@@ -1,16 +1,130 @@
 {
   "mode": {
     "10": {
-      "best_score": null,
-      "scores": []
+      "best_score": {
+        "name": "GOD",
+        "score": 100
+      },
+      "scores": [
+        {
+          "date": "2026-11-17 17:30:04",
+          "name": "JMS",
+          "total_questions": 10,
+          "score": 80
+        },
+        {
+          "date": "2026-11-17 17:31:57",
+          "name": "CLD",
+          "total_questions": 10,
+          "score": 70
+        },
+        {
+          "date": "2026-11-17 17:31:57",
+          "name": "CLD",
+          "total_questions": 10,
+          "score": 80
+        },
+        {
+          "date": "2026-11-17 17:31:57",
+          "name": "AAA",
+          "total_questions": 10,
+          "score": 90
+        },
+        {
+          "date": "2026-11-17 17:31:57",
+          "name": "BBB",
+          "total_questions": 10,
+          "score": 90
+        },
+        {
+          "date": "2026-11-17 17:31:57",
+          "name": "CLD",
+          "total_questions": 10,
+          "score": 99
+        },
+        {
+          "date": "2026-11-17 17:35:18",
+          "name": "GOD",
+          "total_questions": 10,
+          "score": 100
+        }
+      ]
     },
     "20": {
-      "best_score": null,
-      "scores": []
+      "best_score": {
+        "name": "CLD",
+        "score": 99
+      },
+      "scores": [
+        {
+          "date": "2026-11-17 17:31:57",
+          "name": "CLD",
+          "total_questions": 20,
+          "score": 60
+        },
+        {
+          "date": "2026-11-17 17:31:57",
+          "name": "KIM",
+          "total_questions": 20,
+          "score": 50
+        },
+        {
+          "date": "2026-11-17 17:31:57",
+          "name": "KIM",
+          "total_questions": 20,
+          "score": 80
+        },
+        {
+          "date": "2026-11-17 17:31:57",
+          "name": "LEE",
+          "total_questions": 20,
+          "score": 80
+        },
+        {
+          "date": "2026-11-17 17:31:57",
+          "name": "CLD",
+          "total_questions": 20,
+          "score": 99
+        }
+      ]
     },
     "30": {
-      "best_score": null,
-      "scores": []
+      "best_score": {
+        "name": "CLD",
+        "score": 100
+      },
+      "scores": [
+        {
+          "date": "2026-11-17 17:31:57",
+          "name": "CLD",
+          "total_questions": 30,
+          "score": 0
+        },
+        {
+          "date": "2026-11-17 17:31:57",
+          "name": "PAR",
+          "total_questions": 30,
+          "score": 0
+        },
+        {
+          "date": "2026-11-17 17:31:57",
+          "name": "PAR",
+          "total_questions": 30,
+          "score": 49
+        },
+        {
+          "date": "2026-11-17 17:31:57",
+          "name": "CLD",
+          "total_questions": 30,
+          "score": 49
+        },
+        {
+          "date": "2026-11-17 17:31:57",
+          "name": "CLD",
+          "total_questions": 30,
+          "score": 100
+        }
+      ]
     }
   }
 }
