@@ -1,5 +1,3 @@
-"""프로그램 진입점: 프로젝트 루트에서 `python -m src.main`으로 실행."""
-
 from src.quiz_game import QuizGame
 
 
