@@ -24,7 +24,7 @@ python -m src.main
 
 ### 4.1 퀴즈 풀기
 - **10 / 20 / 30문제 모드** 중 선택 (등록된 문제가 부족한 모드는 안내 후 재선택)
-- `random.sample()`로 중복 없이 랜덤 출제
+- 중복 없이 랜덤 출제
 - 각 문제에 선택지 4개와 정답 입력(1~4) 제공
 - 문제당 힌트 1회 사용 가능; 힌트 사용한 문제를 맞히면 해당 문항 점수에서 10점 감점
 - 풀이 완료 시 정답 수, 힌트 사용 수, 최종 점수(100점 만점) 표시
@@ -80,8 +80,6 @@ codyssey_mission_2/
 │   ├── state.json          # 퀴즈 데이터
 │   └── scores.json         # 최고 점수 및 기록
 ├── docs/
-│   ├── 01_요구사항_및_설계.md
-│   ├── 02_Git_작업_기록.md
 │   ├── learning/
 │   │   └── learning_notes.md   # 과제 목표 개념 정리
 │   └── screenshots/            # 실행 화면 스크린샷
@@ -98,6 +96,7 @@ codyssey_mission_2/
 | `data/state.json` | 퀴즈 문제, 보기, 정답 번호, 힌트 |
 | `data/scores.json` | 모드별 최고 점수 및 게임별 플레이 기록 |
 
+> **과제 원문과 다른 점(의도된 설계):** 원문은 루트 `state.json` 하나에 퀴즈와 최고 점수를 저장하도록 되어 있으나, 성격이 다른 데이터를 섞지 않기 위해 `data/` 폴더에 **파일 2개로 분리**했습니다. 퀴즈(`state.json`)는 추가·삭제할 때만, 점수(`scores.json`)는 게임마다 바뀌며, 한쪽이 손상돼 초기화돼도 다른 쪽(예: 직접 추가한 퀴즈)은 유지됩니다.
 
 ### 6.2 JSON 데이터 구조
 
@@ -151,8 +150,48 @@ codyssey_mission_2/
 - 읽기 권한·입출력 오류는 안내만 하고 파일을 덮어쓰지 않음
 - 저장 실패 시 오류 안내
 
-자세한 판단 기준은 [docs/01_요구사항_및_설계.md](docs/01_요구사항_및_설계.md) 6.2절 참고.
+## 7. Git 사용 명령어
 
-## 7. 학습 정리
+| 명령어 | 역할 |
+| --- | --- |
+| `git init` | 현재 폴더를 Git 저장소로 초기화 |
+| `git add` | 변경 파일을 커밋 대상(스테이징)에 올림 |
+| `git commit` | 스테이징한 변경을 기록으로 저장 |
+| `git push` | 로컬 커밋을 원격(GitHub)에 업로드 |
+| `git pull` | 원격의 변경사항을 가져와 로컬에 병합 |
+| `git checkout` | 브랜치 전환 (`-b`로 새 브랜치 생성) |
+| `git merge` | 다른 브랜치의 변경을 현재 브랜치에 합침 |
+| `git clone` | 원격 저장소를 로컬에 통째로 복제 |
+
+커밋·브랜치 병합 이력(`git log --oneline --graph`):
+
+![git log](docs/screenshots/git%20log.png)
+
+## 8. 실행 화면
+
+### 개발 환경 (VSCode / Python / Git 버전)
+![개발 환경](docs/screenshots/version.png)
+
+### 메뉴
+![메뉴](docs/screenshots/메뉴.png)
+
+### 퀴즈 풀기 (랜덤 출제)
+같은 10문제 모드를 두 번 실행했을 때 첫 문제가 다르게 출제되는 것을 확인했습니다. 첫 번째 실행은 Ctrl+C로 중단해 안전 종료 처리도 함께 확인했습니다.
+
+![퀴즈 풀기](docs/screenshots/퀴즈%20랜덤%20증거.png)
+
+### 퀴즈 추가
+![퀴즈 추가](docs/screenshots/퀴즈%20추가.png)
+
+### 퀴즈 목록
+![퀴즈 목록](docs/screenshots/퀴즈%20목록.png)
+
+### 퀴즈 삭제
+![퀴즈 삭제](docs/screenshots/퀴즈%20삭제.png)
+
+### 최고 점수
+![최고 점수](docs/screenshots/최고%20점수.png)
+
+## 9. 학습 정리
 
 과제 목표(Python 기초, 클래스, 파일 입출력, Git)의 개념과 이 프로젝트 코드에서 쓰인 위치: [docs/learning/learning_notes.md](docs/learning/learning_notes.md)
